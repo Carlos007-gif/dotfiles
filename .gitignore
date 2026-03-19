@@ -1,13 +1,305 @@
-# PowerShell
+# ═══════════════════════════════════════════════════════════════
+# .GITIGNORE - REPOSITORIO DOTFILES
+# Autor: Carlos Daniel Martínez Reynoso
+# Universidad: FCFM-UANL
+# Carrera: Ciencias Computacionales y Ciberseguridad
+# ═══════════════════════════════════════════════════════════════
+
+# ───────────────────────────────────────────────────────────────
+# 🔧 POWERSHELL
+# ───────────────────────────────────────────────────────────────
+
+# Ignorar módulos de PowerShell (NO el perfil principal)
 *.psd1
 *.psm1
 
-# OS
-.DS_Store
-Thumbs.db
+# Ignorar historial de consola
+ConsoleHost_history.txt
 
-# Editor
+# Ignorar archivos de sesión de PowerShell
+*.SessionState
+
+# PERMITIR explícitamente el perfil principal
+!Microsoft.PowerShell_profile.ps1
+!profile.ps1
+
+# ───────────────────────────────────────────────────────────────
+# 🎨 OH MY POSH
+# ───────────────────────────────────────────────────────────────
+
+# Ignorar backups de configuraciones (se generan automáticamente)
+**/backups/*.omp.json
+**/backups/*.omp.yaml
+backup-*.omp.json
+backup-*.omp.yaml
+
+# Ignorar caché de Oh My Posh
+.omp_cache/
+cache/
+
+# Ignorar archivos temporales de temas
+*.omp.json.tmp
+*.omp.yaml.tmp
+
+# PERMITIR configuraciones principales
+!*.omp.json
+!*.omp.yaml
+!oh-my-posh/*.omp.json
+!oh-my-posh/*.omp.yaml
+
+# ───────────────────────────────────────────────────────────────
+# 👥 USUARIOS (PERSONALIZACIONES)
+# ───────────────────────────────────────────────────────────────
+
+# OPCIÓN A: Ignorar todos los temas de usuarios (privacidad)
+# users/*/
+# users/*/*.omp.json
+
+# OPCIÓN B: Permitir temas de usuarios (compartir configuraciones)
+# Descomentar si quieres compartir tus temas personalizados
+users/*/*.omp.json
+
+# Ignorar archivos temporales de usuarios
+users/*/*.tmp
+users/*/*.bak
+
+# ───────────────────────────────────────────────────────────────
+# 📦 VERSIONES
+# ───────────────────────────────────────────────────────────────
+
+# Permitir todas las versiones del instalador
+versions/*/install.ps1
+versions/*/CHANGELOG.md
+
+# Ignorar archivos temporales en versiones
+versions/*/*.tmp
+versions/*/*.log
+
+# ───────────────────────────────────────────────────────────────
+# 🗑️ SISTEMA OPERATIVO
+# ───────────────────────────────────────────────────────────────
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+System Volume Information/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.fuse_hidden*
+.Trash-*
+
+# ───────────────────────────────────────────────────────────────
+# 📝 EDITORES DE CÓDIGO
+# ───────────────────────────────────────────────────────────────
+
+# Visual Studio Code
 .vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# IntelliJ IDEA / JetBrains
 .idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim / NeoVim
 *.swp
 *.swo
+*.swn
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+.*.elc
+
+# Notepad++
+*.nppbak
+
+# ───────────────────────────────────────────────────────────────
+# 🔐 SEGURIDAD Y CREDENCIALES
+# ───────────────────────────────────────────────────────────────
+
+# Claves y certificados
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+
+# Archivos de entorno y secretos
+.env
+.env.local
+.env.*.local
+*.secret
+*.secrets
+credentials
+credentials.*
+
+# Tokens de acceso
+*.token
+*.auth
+access_token
+oauth_token
+
+# SSH (PERO permitir claves públicas)
+*.pub
+!*.pub
+id_rsa
+id_ed25519
+id_ecdsa
+id_dsa
+*.ppk
+
+# ───────────────────────────────────────────────────────────────
+# 📊 LOGS Y TEMPORALES
+# ───────────────────────────────────────────────────────────────
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporales
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+
+# ───────────────────────────────────────────────────────────────
+# 📁 GIT
+# ───────────────────────────────────────────────────────────────
+
+# Directorio Git
+.git/
+.gitignore
+
+# Archivos de merge/rebase
+*.orig
+*.MERGE_HEAD
+*.FETCH_HEAD
+*.REBASE_HEAD
+
+# ───────────────────────────────────────────────────────────────
+# 🌐 NAVEGADORES
+# ───────────────────────────────────────────────────────────────
+
+# Chrome/Chromium
+Default/
+*.crx
+
+# Firefox
+.profile
+*.sqlite
+
+# ───────────────────────────────────────────────────────────────
+# 📦 GESTORES DE PAQUETES
+# ───────────────────────────────────────────────────────────────
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+pip-delete-this-directory.txt
+
+# Ruby
+*.gem
+*.bundle
+vendor/
+
+# Go
+bin/
+pkg/
+
+# Rust
+target/
+Cargo.lock
+
+# ───────────────────────────────────────────────────────────────
+# ☁️ SERVICIOS EN LA NUBE
+# ───────────────────────────────────────────────────────────────
+
+# AWS
+.aws/
+credentials
+
+# Azure
+.azure/
+.azureCredentials
+
+# Google Cloud
+.gcloud/
+credentials.json
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# ───────────────────────────────────────────────────────────────
+# 📝 DOCUMENTACIÓN (OPCIONAL)
+# ───────────────────────────────────────────────────────────────
+
+# Ignorar borradores de documentación
+docs/drafts/
+*.md.bak
+
+# PERMITIR documentación principal
+!README.md
+!VERSIONS.md
+!CHANGELOG.md
+!LICENSE
+
+# ───────────────────────────────────────────────────────────────
+# ✅ ARCHIVOS QUE SÍ DEBEN TRACKERARSE
+# ───────────────────────────────────────────────────────────────
+
+# Forzar inclusión de archivos importantes
+!install.ps1
+!README.md
+!VERSIONS.md
+!LICENSE
+!.gitignore
+!oh-my-posh/
+!powershell/
+!users/
+!versions/
