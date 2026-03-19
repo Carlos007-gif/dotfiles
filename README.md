@@ -259,54 +259,47 @@ SOFTWARE.
 
 ---
 
-## 🔗 Enlaces Útiles
+🔗 Enlaces Útiles
 
-| 🌐 Recurso        | 🔗 Enlace                                                       |
-| ----------------- | --------------------------------------------------------------- |
-| **Repositorio**   | [GitHub - dotfiles](https://github.com/Carlos007-gif/dotfiles)  |
-| **Oh My Posh**    | [Sitio Oficial](https://ohmyposh.dev)                           |
-| **Documentación** | [Docs Oh My Posh](https://ohmyposh.dev/docs)                    |
-| **Temas**         | [Catálogo Disponible](https://ohmyposh.dev/docs/themes)         |
-| **PowerShell**    | [GitHub - PowerShell](https://github.com/PowerShell/PowerShell) |
-| **Nerd Fonts**    | [Descargar Fuentes](https://www.nerdfonts.com)                  |
-| **Winget**        | [Microsoft Package Manager](https://aka.ms/winget-cli)          |
-| **Chocolatey**    | [Package Manager](https://chocolatey.org)                       |
-| **Scoop**         | [Package Installer](https://scoop.sh)                           |
+| Recurso                  | Enlace                                    |
+| ------------------------ | ----------------------------------------- |
+| Repositorio              | https://github.com/Carlos007-gif/dotfiles |
+| Oh My Posh               | https://ohmyposh.dev                      |
+| Documentación Oh My Posh | https://ohmyposh.dev/docs                 |
+| Temas Disponibles        | https://ohmyposh.dev/docs/themes          |
+| PowerShell               | https://github.com/PowerShell/PowerShell  |
+| Nerd Fonts               | https://www.nerdfonts.com                 |
+| Winget                   | https://aka.ms/winget-cli                 |
+| Chocolatey               | https://chocolatey.org                    |
+| Scoop                    | https://scoop.sh                          |
 
----
+📞 Contacto
 
-## 📞 Contacto
+| Campo       | Valor                                     |
+| ----------- | ----------------------------------------- |
+| GitHub      | @Carlos007-gif                            |
+| Universidad | FCFM-UANL                                 |
+| Carrera     | Ciencias Computacionales y Ciberseguridad |
+| Ubicación   | Monterrey, Nuevo León, México             |
 
-| Campo              | Valor                                              |
-| ------------------ | -------------------------------------------------- |
-| 👨‍💻 **GitHub**      | [@Carlos007-gif](https://github.com/Carlos007-gif) |
-| 🎓 **Universidad** | FCFM-UANL                                          |
-| 📚 **Carrera**     | Ciencias Computacionales y Ciberseguridad          |
-| 📍 **Ubicación**   | Monterrey, Nuevo León, México 🇲🇽                   |
+⭐ Agradecimientos
 
----
+- **Jan De Dobbeleer** - Creador de Oh My Posh
+- **Comunidad de PowerShell** - Recursos y documentación
+- **Nerd Fonts** - Fuentes para íconos
+- **FCFM-UANL** - Universidad y apoyo académico
+  📈 Estadísticas del Proyecto
 
-## ⭐ Agradecimientos
-
-- **Jan De Dobbeleer** — Creador de Oh My Posh
-- **Comunidad de PowerShell** — Recursos y documentación
-- **Nerd Fonts** — Fuentes para íconos
-- **FCFM-UANL** — Universidad y apoyo académico
-
----
-
-## 📈 Estadísticas del Proyecto
-
-| 📊 Métrica             | 📌 Valor                           |
-| ---------------------- | ---------------------------------- |
-| Versiones lanzadas     | **4**                              |
-| Versión actual         | **2.2.0**                          |
-| Última actualización   | **19/03/2026**                     |
-| Alias incluidos        | **12**                             |
-| Métodos de instalación | **5**                              |
-| Temas soportados       | **100+**                           |
-| Idioma                 | **Español** 🇪🇸                     |
-| Compatibilidad         | **Windows 10/11, PowerShell 7.0+** |
+| Métrica                | Valor                          |
+| ---------------------- | ------------------------------ |
+| Versiones lanzadas     | 4                              |
+| Versión actual         | 2.2.0                          |
+| Última actualización   | 19/03/2026                     |
+| Alias incluidos        | 12                             |
+| Métodos de instalación | 5                              |
+| Temas soportados       | 100+                           |
+| Idioma                 | Español                        |
+| Compatibilidad         | Windows 10/11, PowerShell 7.0+ |
 
 <div align="center">
 
