@@ -467,5 +467,32 @@ function Set-OhMyPoshTheme {
 }
 Set-Alias settheme Set-OhMyPoshTheme
 # =============================================================================
+# Sincronizar $PROFILE con Dotfiles
+# =============================================================================
+
+function Sync-Profile {
+    <#
+    .SYNOPSIS
+        Copia el $PROFILE actual al repositorio de dotfiles y sincroniza con GitHub
+    #>
+    
+    $dotfilesProfilePath = "$env:USERPROFILE\GitHub\dotfiles\powershell\Microsoft.PowerShell_profile.ps1"
+    
+    # Crear directorio si no existe
+    $profileDir = Split-Path $dotfilesProfilePath -Parent
+    if (-not (Test-Path $profileDir)) {
+        New-Item -ItemType Directory -Path $profileDir -Force | Out-Null
+        Write-Host "📁 Directorio creado: $profileDir" -ForegroundColor Cyan
+    }
+    
+    # Copiar perfil
+    Copy-Item $PROFILE $dotfilesProfilePath -Force
+    Write-Host "✓ Perfil copiado a dotfiles" -ForegroundColor Green
+    
+    # Sincronizar con GitHub
+    syncdf
+}
+Set-Alias syncprofile Sync-Profile
+# =============================================================================
 # Fin del Perfil
 # =============================================================================
