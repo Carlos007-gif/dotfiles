@@ -7,7 +7,7 @@
 # =============================================================================
 
 # Ruta a la configuración personalizada
-$OhMyPoshConfig = "C:\Users\Lenovo2006CDMR\Downloads\oh-my-posh\themes\catppuccin.omp.json"
+$OhMyPoshConfig = "C:\Users\Lenovo2006CDMR\Downloads\oh-my-posh-configs\carlos-optimized.omp.json"
 
 # =============================================================================
 # Inicialización de Oh My Posh
@@ -496,3 +496,4 @@ Set-Alias syncprofile Sync-Profile
 # =============================================================================
 # Fin del Perfil
 # =============================================================================
+
