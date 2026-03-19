@@ -339,133 +339,93 @@ function Get-OhMyPoshInfo {
 Set-Alias ompinfo Get-OhMyPoshInfo
 
 # =============================================================================
-# Resumen de Alias Disponibles
-# =============================================================================
-<#
-┌─────────────────────────────────────────────────────────────────────┐
-│  ALIAS DISPONIBLES PARA GESTIÓN DE OH MY POSH                       │
-├─────────────────────────────────────────────────────────────────────┤
-│  testomp       → Validar configuración JSON                         │
-│  eompc         → Editar configuración en Notepad                    │
-│  romp          → Recargar Oh My Posh sin reiniciar terminal         │
-│  updateomp     → Actualizar Oh My Posh vía winget                   │
-│  backupomp     → Crear backup con timestamp                         │
-│  syncdf        → Sincronizar con repositorio GitHub de dotfiles     │
-│  testtheme     → Probar tema temporalmente                          │
-│  listthemes    → Listar temas disponibles                           │
-│  testtopthemes → Demo automática de 10 temas top                    │
-│  ompinfo       → Mostrar información completa del estado            │
-└─────────────────────────────────────────────────────────────────────┘
-#>
-# =============================================================================
-# =============================================================================
-# Cambio Rápido de Tema
+# Cambio Rápido de Tema (Versión Mejorada - Búsqueda en Múltiples Directorios)
 # =============================================================================
 
 function Set-OhMyPoshTheme {
     <#
     .SYNOPSIS
-        Cambia el tema de Oh My Posh permanentemente
+        Cambia el tema de Oh My Posh permanentemente.
+        Busca en: themes\ y oh-my-posh-configs\
     .PARAMETER ThemeName
-        Nombre del tema sin extensión .omp.json
+        Nombre del tema/archivo sin extensión .omp.json
     .EXAMPLE
-        Set-OhMyPoshTheme catppuccin
+        Set-OhMyPoshTheme catppuccin           # Busca en themes\
+        Set-OhMyPoshTheme carlos-optimized     # Busca en oh-my-posh-configs\
     #>
     param(
         [Parameter(Mandatory=$true)]
         [string]$ThemeName
     )
     
-    $themePath = "$env:USERPROFILE\Downloads\oh-my-posh\themes\$ThemeName.omp.json"
-    
-    if (-not (Test-Path $themePath)) {
-        Write-Host "✗ Tema no encontrado: $ThemeName" -ForegroundColor Red
-        return
-    }
-    
-    # Crear backup primero
-    Write-Host "📦 Creando respaldo de configuración actual..." -ForegroundColor Cyan
-    backupomp
-    
-    # Leer perfil actual
-    $profileContent = Get-Content $PROFILE -Raw
-    
-    # Reemplazar ruta del tema
-    $oldPattern = '\$OhMyPoshConfig\s*=\s*"[^"]*"'
-    $newLine = "`$OhMyPoshConfig = `"$themePath`""
-    $profileContent = $profileContent -replace $oldPattern, $newLine
-    
-    # Guardar cambios
-    $profileContent | Set-Content $PROFILE -Encoding utf8
-    Write-Host "✓ Perfil actualizado" -ForegroundColor Green
-    
-    # Recargar
-    Write-Host "🔄 Recargando configuración..." -ForegroundColor Cyan
-    . $PROFILE
-    
-    Write-Host "✓ Tema cambiado a: $ThemeName" -ForegroundColor Green
-}
-Set-Alias settheme Set-OhMyPoshTheme
-# =============================================================================
-# Cambio Rápido de Tema (Versión Mejorada)
-# =============================================================================
-
-function Set-OhMyPoshTheme {
-    <#
-    .SYNOPSIS
-        Cambia el tema de Oh My Posh permanentemente (busca en themes y configs)
-    #>
-    param(
-        [Parameter(Mandatory=$true)]
-        [string]$ThemeName
+    # Lista de directorios a buscar (en orden de prioridad)
+    $searchPaths = @(
+        "$env:USERPROFILE\Downloads\oh-my-posh\themes\",
+        "$env:USERPROFILE\Downloads\oh-my-posh-configs\"
     )
     
-    # Buscar en ambos directorios
-    $themePaths = @(
-        "$env:USERPROFILE\Downloads\oh-my-posh\themes\$ThemeName.omp.json",
-        "$env:USERPROFILE\Downloads\oh-my-posh-configs\$ThemeName.omp.json"
-    )
+    # Extensiones a probar
+    $extensions = @('.omp.json', '.omp.yaml')
     
+    # Buscar el archivo
     $themePath = $null
-    foreach ($path in $themePaths) {
-        if (Test-Path $path) {
-            $themePath = $path
-            break
+    foreach ($dir in $searchPaths) {
+        foreach ($ext in $extensions) {
+            $candidate = "$dir$ThemeName$ext"
+            if (Test-Path $candidate) {
+                $themePath = $candidate
+                Write-Host "🔍 Tema encontrado: $candidate" -ForegroundColor Gray
+                break
+            }
         }
+        if ($themePath) { break }
     }
     
+    # Si no se encontró, mostrar error informativo
     if (-not $themePath) {
         Write-Host "✗ Tema no encontrado: $ThemeName" -ForegroundColor Red
-        Write-Host "💡 Busque en: " -NoNewline -ForegroundColor Gray
-        Write-Host "themes\ " -NoNewline -ForegroundColor Cyan
-        Write-Host "o " -NoNewline -ForegroundColor Gray
-        Write-Host "oh-my-posh-configs\" -ForegroundColor Cyan
+        Write-Host "`n💡 Directorios buscados:" -ForegroundColor Cyan
+        foreach ($dir in $searchPaths) {
+            Write-Host "  • $dir" -ForegroundColor Gray
+        }
+        Write-Host "`n💡 Extensiones probadas: .omp.json, .omp.yaml" -ForegroundColor Cyan
+        Write-Host "`n📋 Temas disponibles en themes\:" -ForegroundColor Cyan
+        Get-ChildItem "$env:USERPROFILE\Downloads\oh-my-posh\themes\*.omp.json" | 
+            Select-Object -First 10 -ExpandProperty BaseName | 
+            ForEach-Object { Write-Host "  • $_" -ForegroundColor Gray }
         return
     }
     
-    # Crear backup primero
+    # Crear backup primero (seguridad)
     Write-Host "📦 Creando respaldo de configuración actual..." -ForegroundColor Cyan
     backupomp
     
-    # Leer perfil actual
+    # Leer contenido actual del perfil
     $profileContent = Get-Content $PROFILE -Raw
     
-    # Reemplazar ruta del tema
+    # Patrón para encontrar y reemplazar la línea $OhMyPoshConfig
+    # CORREGIDO: Usar patrón simplificado que funciona en PowerShell
     $oldPattern = '\$OhMyPoshConfig\s*=\s*"[^"]*"'
     $newLine = "`$OhMyPoshConfig = `"$themePath`""
+    
+    # Reemplazar
     $profileContent = $profileContent -replace $oldPattern, $newLine
     
-    # Guardar cambios
-    $profileContent | Set-Content $PROFILE -Encoding utf8
+    # Guardar cambios con codificación UTF8 (importante para caracteres especiales)
+    $profileContent | Set-Content $PROFILE -Encoding utf8 -Force
     Write-Host "✓ Perfil actualizado" -ForegroundColor Green
     
-    # Recargar
+    # Recargar perfil para aplicar cambios inmediatamente
     Write-Host "🔄 Recargando configuración..." -ForegroundColor Cyan
     . $PROFILE
     
-    Write-Host "✓ Tema cambiado a: $ThemeName" -ForegroundColor Green
+    # Confirmación final
+    $themeNameOnly = Split-Path $themePath -Leaf
+    Write-Host "✓ Tema cambiado exitosamente a: $themeNameOnly" -ForegroundColor Green
+    Write-Host "  Ruta: $themePath" -ForegroundColor Gray
 }
 Set-Alias settheme Set-OhMyPoshTheme
+
 # =============================================================================
 # Sincronizar $PROFILE con Dotfiles
 # =============================================================================
@@ -493,7 +453,36 @@ function Sync-Profile {
     syncdf
 }
 Set-Alias syncprofile Sync-Profile
+
+# =============================================================================
+# Resumen de Alias Disponibles
+# =============================================================================
+<#
+┌─────────────────────────────────────────────────────────────────────┐
+│  ALIAS DISPONIBLES PARA GESTIÓN DE OH MY POSH                       │
+├─────────────────────────────────────────────────────────────────────┤
+│  testomp       → Validar configuración JSON                         │
+│  eompc         → Editar configuración en Notepad                    │
+│  romp          → Recargar Oh My Posh sin reiniciar terminal         │
+│  updateomp     → Actualizar Oh My Posh vía winget                   │
+│  backupomp     → Crear backup con timestamp                         │
+│  syncdf        → Sincronizar con repositorio GitHub de dotfiles     │
+│  testtheme     → Probar tema temporalmente                          │
+│  listthemes    → Listar temas disponibles                           │
+│  testtopthemes → Demo automática de 10 temas top                    │
+│  ompinfo       → Mostrar información completa del estado            │
+│  settheme      → Cambiar tema permanentemente (búsqueda inteligente)│
+│  syncprofile   → Copiar $PROFILE a dotfiles y sincronizar           │
+└─────────────────────────────────────────────────────────────────────┘
+#>
+
 # =============================================================================
 # Fin del Perfil
 # =============================================================================
+
+
+
+
+
+
 
