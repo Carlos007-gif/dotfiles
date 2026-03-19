@@ -3,7 +3,7 @@
   "version": 2,
   "final_space": true,
   "console_title_template": "{{ .Shell }} in {{ .Folder }}",
-
+  
   "blocks": [
     {
       "type": "prompt",
@@ -25,7 +25,7 @@
           "foreground": "#ffffff",
           "background": "#446786",
           "template": "  {{ .Path }} ",
-          "options": {
+          "properties": {
             "style": "folder",
             "max_depth": 3
           }
@@ -43,7 +43,9 @@
             "{{ if gt .Behind 0 }}#B388FF{{ end }}"
           ],
           "template": " {{ if .UpstreamURL }}{{ url .UpstreamIcon .UpstreamURL }} {{ end }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} 󰈏 {{ .StashCount }}{{ end }} ",
-          "options": {
+          "properties": {
+            "branch_max_length": 25,
+            "fetch_stash_count": true,
             "fetch_status": true,
             "fetch_upstream_icon": true
           },
@@ -58,7 +60,7 @@
           "foreground": "#ffffff",
           "background": "#95E6CB",
           "template": "  {{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }} ",
-          "options": {
+          "properties": {
             "fetch_virtual_env": true,
             "display_mode": "files"
           },
@@ -72,7 +74,7 @@
           "foreground": "#ffffff",
           "background": "#89DDFF",
           "template": "  {{ .Full }} ",
-          "options": {
+          "properties": {
             "display_mode": "files"
           },
           "include_files": ["package.json", "*.js", "*.ts"],
@@ -85,7 +87,7 @@
           "foreground": "#000000",
           "background": "#FF6B6B",
           "template": " 󰄧 {{ .FormattedMs }} ",
-          "options": {
+          "properties": {
             "threshold": 500
           }
         },
@@ -97,7 +99,7 @@
           "background": "#4CAF50",
           "background_templates": ["{{ if gt .Code 0 }}#F44336{{ end }}"],
           "template": " {{ if gt .Code 0 }} {{ .Meaning }}{{ else }}✓{{ end }} ",
-          "options": {
+          "properties": {
             "always_enabled": true
           }
         }
@@ -112,7 +114,7 @@
           "style": "plain",
           "foreground": "#8B949E",
           "template": " {{ .CurrentDate | date .Format }} ",
-          "options": {
+          "properties": {
             "time_format": "15:04:05"
           },
           "cache": { "duration": "1s" }
@@ -133,19 +135,19 @@
       ]
     }
   ],
-
+  
   "secondary_prompt": {
     "template": "❯❯ ",
     "foreground": "#7390C2",
     "background": "transparent"
   },
-
+  
   "transient_prompt": {
     "template": "❯ ",
     "foreground": "#7390C2",
     "background": "transparent"
   },
-
+  
   "tooltips": [
     {
       "type": "aws",
@@ -153,7 +155,7 @@
       "style": "plain",
       "foreground": "#FF9900",
       "template": " 󰸏 {{ .Profile }} ",
-      "options": {
+      "properties": {
         "display_default": false
       }
     },
